@@ -2,6 +2,7 @@ package me.ykrank.s1next;
 
 import android.content.Context;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -154,7 +155,8 @@ public final class AppModule {
     @Singleton
     ObjectMapper provideJsonObjectMapper() {
         return new ObjectMapper()
-                .configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
+                .configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true)
+                .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true);
     }
 
     @Provides
