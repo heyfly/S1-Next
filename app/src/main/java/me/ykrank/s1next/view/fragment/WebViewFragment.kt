@@ -17,6 +17,7 @@ import me.ykrank.s1next.R
 import me.ykrank.s1next.databinding.FragmentWebviewBinding
 import me.ykrank.s1next.util.L
 import me.ykrank.s1next.util.WebViewUtils
+import me.ykrank.s1next.view.activity.WebViewActivity
 import me.ykrank.s1next.view.internal.BackPressDelegate
 import me.ykrank.s1next.viewmodel.WebPageViewModel
 import java.net.CookieManager
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class WebViewFragment : BaseFragment(), BackPressDelegate {
     private lateinit var url: String
     private var enableJs: Boolean = false
+    private var pcUserAgent: Boolean = false
 
     @Inject
     internal lateinit var mCookieManager: CookieManager
@@ -46,6 +48,7 @@ class WebViewFragment : BaseFragment(), BackPressDelegate {
         L.leaveMsg(TAG)
         url = arguments.getString(ARG_URL)
         enableJs = arguments.getBoolean(ARG_ENABLE_JS)
+        pcUserAgent = arguments.getBoolean(ARG_PC_USER_AGENT)
 
         binding.webPageViewModel = WebPageViewModel()
 
@@ -102,7 +105,9 @@ class WebViewFragment : BaseFragment(), BackPressDelegate {
             webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
         }
         webSettings.javaScriptCanOpenWindowsAutomatically = true //支持通过JS打开新窗口
-        webSettings.userAgentString = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:51.0) Gecko/20100101 Firefox/51.0"
+        if (pcUserAgent) {
+            webSettings.userAgentString = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:51.0) Gecko/20100101 Firefox/51.0"
+        }
     }
 
     private fun initWebViewClient() {
@@ -123,12 +128,14 @@ class WebViewFragment : BaseFragment(), BackPressDelegate {
         val TAG: String = WebLoginFragment::class.java.name
         val ARG_URL = "arg_url"
         var ARG_ENABLE_JS = "arg_enable_js"
+        var ARG_PC_USER_AGENT = "arg_pc_user_agent"
 
-        fun getInstance(url: String, enableJS: Boolean = false): WebViewFragment {
+        fun getInstance(url: String, enableJS: Boolean = false, pcUserAgent:Boolean = false): WebViewFragment {
             val fragment = WebViewFragment()
             val bundle = Bundle()
             bundle.putString(ARG_URL, url)
             bundle.putBoolean(ARG_ENABLE_JS, enableJS)
+            bundle.putBoolean(ARG_PC_USER_AGENT, pcUserAgent)
             fragment.arguments = bundle
             return fragment
         }
