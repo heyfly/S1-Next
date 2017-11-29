@@ -36,7 +36,7 @@ public final class BuildTypeModule {
     @Provides
     @Singleton
     OkHttpClient providerDataOkHttpClient(@Data OkHttpClient.Builder builder) {
-        Preconditions.checkState("debug".equals(BuildConfig.BUILD_TYPE));
+        // Preconditions.checkState("debug".equals(BuildConfig.BUILD_TYPE));
 
         //log
         builder.addNetworkInterceptor(new StethoInterceptor());
@@ -56,7 +56,7 @@ public final class BuildTypeModule {
     @Provides
     @Singleton
     OkHttpClient providerImageOkHttpClient(@Image OkHttpClient.Builder builder) {
-        Preconditions.checkState("debug".equals(BuildConfig.BUILD_TYPE));
+        // Preconditions.checkState("debug".equals(BuildConfig.BUILD_TYPE));
 
         //log
         builder.addNetworkInterceptor(new StethoInterceptor());
@@ -76,7 +76,7 @@ public final class BuildTypeModule {
     @Provides
     @Singleton
     OkHttpClient providerAppdataOkHttpClient(@AppData OkHttpClient.Builder builder) {
-        Preconditions.checkState("debug".equals(BuildConfig.BUILD_TYPE));
+        // Preconditions.checkState("debug".equals(BuildConfig.BUILD_TYPE));
 
         //log
         builder.addNetworkInterceptor(new StethoInterceptor());
